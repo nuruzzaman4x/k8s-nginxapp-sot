@@ -3,8 +3,13 @@ kind: Kustomization
 metadata:
   name: ingress-nginx
   namespace: fluxcd
-resources:
-  - helmrepo.yaml
-  - helmrelease.yaml
-interval: 1m0s
+spec:
+  interval: 1m
+  path: "./deploy/ingress-nginx"
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: k8s-nginxapp-sot
+    namespace: fluxcd
 
