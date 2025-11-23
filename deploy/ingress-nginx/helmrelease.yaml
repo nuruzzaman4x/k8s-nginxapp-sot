@@ -4,6 +4,7 @@ metadata:
   name: ingress-nginx
   namespace: fluxcd
 spec:
+  interval: 1m0s
   chart:
     spec:
       chart: ingress-nginx

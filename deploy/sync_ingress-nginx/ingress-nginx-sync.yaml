@@ -1,0 +1,14 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1	#FluxCD এর **Kustomize Controller** যেই API ব্যবহার করে, সেটা।
+kind: Kustomization	#এটা বলছে আমরা Flux-এর Kustomization রিসোর্স তৈরি করছি,মানে Flux Kubernetes YAML গুলো apply করার কাজ করবে
+metadata:
+  name: k8snginxappsotkust	#Kustomization-এর নাম
+  namespace: fluxcd		#FluxCD কোথায় রান করবে (namespace),নামটা project/repo সঙ্গে মিলিয়ে রাখা সহজ হয়
+spec:
+  interval: 30s			#Flux প্রতি ৩০ সেকেন্ডে একবার দেখে YAML ফাইলগুলোর আপডেট এসেছে কিনা।নতুন update পেলে আবার apply করবে।
+  path: ./deploy/ingress-nginx	#Git রিপো-এর কোন ফোল্ডারে Kubernetes YAML ফাইল আছে? Flux সেই লোকেশন থেকে YAML apply করবে
+  prune: true			#যদি Git রিপো থেকে কোনো YAML ফাইল মুছে ফেলা হয়,Flux Kubernetes ক্লাস্টার থেকেও সেই রিসোর্স delete করে দেবে
+  wait: true		     #Flux apply করার পর নিশ্চিত হবে যে রিসোর্সগুলো **সঠিকভাবে deploy হয়েছে** (ready/healthy),Ready না হলে error দেবে।
+  sourceRef:
+    kind: GitRepository	#এই Kustomization কোন GitRepository রিসোর্স থেকে ফাইল নেবে তা বলে দেয়।এটা আগের GitRepository YAML-এর নাম।
+    name: k8s-nginxapp-sot
+

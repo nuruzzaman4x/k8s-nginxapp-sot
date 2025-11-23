@@ -1,0 +1,11 @@
+apiVersion: source.toolkit.fluxcd.io/v1		#FluxCD এর **Source Controller** যেই API দিয়ে কাজ করে, তার ভার্সন।
+kind: GitRepository					#আমরা FluxCD-কে একটি Git Repository সোর্স হিসেবে ব্যবহার করতে চাই।
+metadata:
+  name: k8s-nginxapp-sot                	#এই Git রিপো সোর্সের নাম,git repo ar sateh match rakha valo
+  namespace: fluxcd
+spec:
+  interval: 30s				#প্রতি ৩০ সেকেন্ডে একবার GitHub রিপোটা চেক করবে। নতুন আপডেট পেলে সেটা রিফ্রেশ করবে।
+  ref:
+    branch: main				#কোন ব্রাঞ্চ Track করবে?
+  url: https://github.com/nuruzzaman4x/k8s-nginxapp-sot.git
+
